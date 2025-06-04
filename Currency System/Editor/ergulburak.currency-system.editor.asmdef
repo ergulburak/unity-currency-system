@@ -1,0 +1,14 @@
+{
+    "name": "ergulburak.currency-system.editor",
+    "rootNamespace": "ergulburak",
+    "references": ["ergulburak.currency-system"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

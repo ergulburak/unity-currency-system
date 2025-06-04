@@ -1,0 +1,23 @@
+{
+  "name": "com.ergulburak.currency-system",
+  "version": "0.0.1",
+  "displayName": "Currency System",
+  "description": "Handles currency",
+  "unity": "2022.3",
+  "unityRelease": "57f1",
+  "documentationUrl": "https://github.com/ergulburak/unity-currency-system",
+  "changelogUrl": "https://github.com/ergulburak/unity-currency-system/activity",
+  "licensesUrl": "https://github.com/ergulburak/unity-currency-system/blob/main/LICENSE",
+  "keywords": [
+    "currency",
+    "system"
+  ],
+  "author": {
+    "name": "Burak Ergul",
+    "email": "ergulburak@proton.me",
+    "url": "https://ergulburak.github.io"
+  },
+  "dependencies": {
+    "com.ergulburak.save-system": "0.0.6"
+  }
+}
