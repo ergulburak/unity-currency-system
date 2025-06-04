@@ -1,141 +1,114 @@
-# 💰 Currency System
+# ⚙️ Currency System – Installation Guide
 
-## 📌 Description
+## 🧩 Requirements
 
-Currency System is a modular runtime tool designed for managing game currencies with support for exchange mechanics and persistent saving. Each currency is defined with customizable metadata and exchange rates. The system is integrated with Save System to ensure data persistence between sessions.
-
-> ⚠️ **Important**: To initialize the system, open it once via Unity Editor:  
-> **Tools > Currency System**
-
----
-
-## 📁 Structure
-
-```
-Currency System/
-│
-├── Runtime/
-│   ├── CurrencyInformation.cs       # Currency definitions
-│   ├── CurrencyExchangeRate.cs      # Exchange rate structure
-│   ├── CurrencySaveData.cs          # Saveable data container
-│   ├── CurrencyHelper.cs            # Public API
-│   ├── CurrencySystemExample.cs     # Test MonoBehaviour
-│
-├── Editor/
-│   └── CurrencyConfigWindow.cs      # Editor interface for setup
-```
+- Unity 2021.3+ (recommended)
+- Save System package by ergulburak
+- Compatible with URP, HDRP, or Built-in
 
 ---
 
-## 🧠 CurrencyInformation
+## 📦 Installation via Package Manager
 
-Each currency is defined via a `CurrencyInformation` object.
+1. Open `manifest.json` under `Packages/`
+2. Add the following Git URL (if hosted):
 
-```csharp
-public class CurrencyInformation
-{
-    public string name;
-    public string shownName;
-    public string description;
-    public string symbol;
-    public Texture icon;
-    public Color color;
-    public float defaultAmount;
-    public int decimalPlaces;
-    public bool useMaximumAmount;
-    public float maximumAmount;
-    public List<CurrencyExchangeRate> exchangeRates;
-}
+```json
+"com.ergulburak.currency-system": "https://github.com/ergulburak/unity-currency-system.git"
 ```
+
+OR use local path:
+
+```json
+"com.ergulburak.currency-system": "file:../Packages/Currency System"
+```
+
+3. Ensure `Save System` is installed and referenced in your assembly definitions.
 
 ---
 
-## 🔄 Exchange System
+## 🧾 First-Time Setup
 
-You can define exchange rates between currencies directly in the editor via `CurrencyConfigWindow`.
+- Use the editor menu:  
+  `Tools > Currency System`  
+  to create and configure currencies.
 
-```csharp
-public class CurrencyExchangeRate
-{
-    public string targetCurrencyKey;
-    public float rate;
-}
-```
+- Make sure at least one currency is defined before runtime.
+- Click "Update Currencies" button to create Currencies class
 
 ---
 
-## 💾 Save Integration
+## 🧪 Validation
 
-Currency values are persisted through `CurrencySaveData`, which is managed internally by `SaveHelper`.
+- Enter Play Mode
+- Test your currencies using `CurrencyHelper`
+- Confirm that values persist between sessions
 
-```csharp
-public class CurrencySaveData
-{
-    public Dictionary<string, float> Currencies = new();
-}
-```
+---
+# 👤 Currency System – User Guide
 
-Every save operation is queued and handled safely via:
+## 🎯 Goal
 
-```csharp
-SaveHelper.SaveData(saveableInstance);
-```
-
-> Only the last queued save of the same type is written to disk.
+Manage multiple in-game currencies with:
+- Exchange capabilities
+- Decimal formatting
+- UI-friendly metadata
+- Persistent storage via Save System
 
 ---
 
-## 🔧 CurrencyHelper API
+## 📘 Creating a Currency
 
-```csharp
-float CurrencyHelper.GetAmount(string key);
-void CurrencyHelper.SetAmount(string key, int value);
-void CurrencyHelper.Add(string key, int delta);
-bool CurrencyHelper.Subtract(string key, int delta);
-bool CurrencyHelper.TryExchange(string fromKey, string toKey, int fromAmount);
-```
-
-All methods will automatically trigger a save through `SaveHelper.SaveData(...)`.
+1. Open: `Tools > Currency System`
+2. Click “Add New Currency”
+3. Fill out:
+   - Internal `name`
+   - Display `shownName`, `description`, `symbol`, `color`, etc.
+4. Set `defaultAmount`, `decimalPlaces`
+5. Optionally define `maximumAmount` and enable the toggle
 
 ---
 
-## 🧪 Usage Example
+## 🔁 Defining Exchange Rates
+
+Inside the Currency Editor:
+- Scroll to “Exchange Rates”
+- Add a new rate
+- Choose a **different currency** from the dropdown
+- Define a conversion rate (e.g., 1 Gold → 2 Gems)
+
+Duplicate target keys are automatically prevented.
+
+---
+
+## 💾 Using in Code
+
+Access the system via `CurrencyHelper`:
 
 ```csharp
 CurrencyHelper.Add("Gold", 100);
 CurrencyHelper.Subtract("Gold", 30);
-
-if (CurrencyHelper.TryExchange("Gold", "Gem", 20))
-{
-    Debug.Log("Exchange successful!");
-}
-
-Debug.Log("Current Gem: " + CurrencyHelper.GetAmount("Gem"));
+CurrencyHelper.SetAmount("Gem", 500);
+CurrencyHelper.TryExchange("Gold", "Gem", 25);
 ```
+
+All operations auto-save via `SaveHelper.SaveData()` internally.
 
 ---
 
-## ⚙️ Editor Integration
+## 🧼 Resetting Data
 
-Open the currency editor via:
-
-```
-Tools > Currency System
-```
-
-You’ll be able to:
-- Edit currency metadata
-- Define exchange rates via dropdown
-- Prevent duplicate target keys
-- Set visuals like icon, color, decimal places, etc.
+To reset or delete data manually:
+- Navigate to:  
+  `%APPDATA%/../LocalLow/{Company}/{Product}/Saves/`
+- Delete the relevant `.lugreb` files
 
 ---
 
-## ⚠️ Notes
+## 🔒 Notes
 
-- The system **must be initialized** via `Tools > Currency System` before runtime use.
-- `exchangeRates` must not include self-to-self entries.
-- Save calls are automatically queued and optimized to avoid redundant disk writes.
-- All currencies must be defined in `CurrencyData.asset`.
+- SaveSystem must be initialized at runtime
+- Callbacks or event triggers can be added to react to currency changes
+- Add custom UI bindings if needed
 
 ---
