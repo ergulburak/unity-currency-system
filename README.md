@@ -14,7 +14,7 @@
 2. Add the following Git URL (if hosted):
 
 ```json
-"com.ergulburak.currency-system": "https://github.com/ergulburak/unity-currency-system.git"
+"com.ergulburak.currency-system": "https://github.com/ergulburak/unity-currency-system.git?path=/Currency%20System"
 ```
 
 OR use local path:
